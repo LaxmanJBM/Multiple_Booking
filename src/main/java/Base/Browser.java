@@ -7,7 +7,7 @@ import Utility.CommonFiles;
 import io.github.bonigarcia.wdm.WebDriverManager;
 public class Browser extends CommonFiles {
 	
-
+//we can do perfect booking
 		protected static WebDriver driver;
 
 		public void initilization() throws Exception {
