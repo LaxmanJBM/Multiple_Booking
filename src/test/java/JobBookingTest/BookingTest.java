@@ -4,12 +4,15 @@ import java.io.FileInputStream;
 import java.util.concurrent.TimeUnit;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import Base.Browser;
 import BookingScreen.JobBooking1;
 import BookingScreen.JobBooking2;
+import Utility.CommonFiles;
+
 
 public class BookingTest extends Browser{
 	JobBooking1 jb1;
@@ -40,9 +43,7 @@ public class BookingTest extends Browser{
 	
 	@Test( enabled =true)
 	public void data() throws Exception {
-		 FileInputStream file1=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\MainBooking\\InputData\\BookingData.xlsx");	
-			
-			
+		 FileInputStream file1=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\MainBooking\\InputData\\BookingData.xlsx");		
 			XSSFWorkbook workbook=new XSSFWorkbook(file1);
 			XSSFSheet sheet = workbook.getSheet("basicDetail");
 			int rowcount = sheet.getLastRowNum();
@@ -68,6 +69,7 @@ public class BookingTest extends Browser{
 			jb2.verifyCostRevenue(exec);
 		
 			jb2.saveBtn();
+			System.out.println("*** JOB BOOKING DONE : "+exec+" ***");
 	
 	}
 	
@@ -76,9 +78,15 @@ public class BookingTest extends Browser{
 
 	@AfterMethod
 	
-	public void exit()
+	public void exit(ITestResult b) throws Throwable
 	{
-	//	driver.quit();
+		if(ITestResult.FAILURE == b.getStatus())
+		{	
+			CommonFiles.captureScreenshotFaildTC(driver,b.getName());
+		}
+		Thread.sleep(2500);
+		driver.quit();
+	
 	}
 	
 

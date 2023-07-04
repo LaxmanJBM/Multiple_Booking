@@ -30,7 +30,7 @@ public static WebDriver driver;
 		Date d=new Date();
 		String date = d.toString().replace(" ", "-").replace(":", "-");
 		File source = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		File destination=new File("C:\\Users\\Admin\\eclipse-workspace\\IFF_Project\\Failed_Screenshot\\ "+ nameOfMethod +","+date+".png");
+		File destination=new File("C:\\Users\\Admin\\eclipse-workspace\\MainBooking\\FailedScreenshots\\ "+ nameOfMethod +","+date+".png");
 		FileHandler.copy(source, destination);
 	}
 	

@@ -2255,7 +2255,9 @@ import Base.Browser;
 					}
 					Thread.sleep(2500);*/
 					try {
-					revAdCostBtn.click();}
+						JavascriptExecutor executor = (JavascriptExecutor) driver;
+					     executor.executeScript("arguments[0].click();", revAdCostBtn);
+					     System.out.println("Click on Cost and Revenue tab");}
 					catch(ElementClickInterceptedException a) {
 						Thread.sleep(800);
 					}
@@ -2296,7 +2298,7 @@ import Base.Browser;
 						job.sendKeys(Keys.ENTER);	
 						
 						List<WebElement> col = driver.findElements(By.xpath("//*[@id=\"amp_common_search_lookup_table_control_\"]/tbody//tr//td"));
-						System.out.println("Total size of col in jobiteam table= "+col.size());
+					//	System.out.println("Total size of col in jobiteam table= "+col.size());
 						
 						for(int i1=0;i1<col.size();i1++)
 						{
@@ -2530,7 +2532,10 @@ import Base.Browser;
 					
 			//CLICK ON SUBMIT BUTTON
 					Thread.sleep(500);
-					submitBtn.click();
+					try {
+						JavascriptExecutor executor = (JavascriptExecutor) driver;
+					     executor.executeScript("arguments[0].click();", submitBtn);}
+					catch(Exception e) {Thread.sleep(1000);}
 					
 			//CLOSE
 		/*			Thread.sleep(1000);
@@ -2570,8 +2575,10 @@ import Base.Browser;
 						   undo.click();
 							 
 						   Thread.sleep(2000);
-						   newBt.click();		
-									}}
+						   newBt.click();	
+						   System.out.println("****BOOKING SAVE SUCCESSFULL****");
+									
+					 }}
 		
 			catch(Exception e) {
 			
