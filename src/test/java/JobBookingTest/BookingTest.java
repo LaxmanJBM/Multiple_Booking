@@ -4,36 +4,40 @@ import java.io.FileInputStream;
 import java.util.concurrent.TimeUnit;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import Base.Browser;
-import BookingScreen.JobBooking1;
-import BookingScreen.JobBooking2;
+import Base.BrowserCode;
+import BookingScreen.FirstPage;
+import BookingScreen.SecondPage;
 import Utility.CommonFiles;
 
 
-public class BookingTest extends Browser{
-	JobBooking1 jb1;
-	JobBooking2 jb2;
 
+public class BookingTest extends BrowserCode{
+	 private WebDriver driver;
+	    private FirstPage pg1;
+	    private SecondPage pg2;
 	@BeforeMethod
 	public void setup() throws Exception {
-
-		initilization();
-		jb1 = new JobBooking1();
-		jb2 = new JobBooking2();
-		jb1.verifyLoginApp();
+		driver = getRemoteDriver();
+        Thread.sleep(1000);
+        pg1 = new FirstPage(driver);
+        pg2 = new SecondPage(driver);
+        
+        driver.get(readExcelFileFinal(3, 1));
+        pg1.verifyLoginApp();
 		Thread.sleep(2000);
 
-		jb1.verifyIFFBtn();
+		pg1.verifyIFFBtn();
 		Thread.sleep(2000);
-		jb1.verifySalesBtn();
+		pg1.verifySalesBtn();
 		Thread.sleep(2000);
-		jb1.verifyBookingBtn();
+		pg1.verifyBookingBtn();
 		Thread.sleep(2000);
-		jb2.verifyNewBtn();
+		pg2.verifyNewBtn();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		
 		
@@ -43,7 +47,7 @@ public class BookingTest extends Browser{
 	
 	@Test( enabled =true)
 	public void data() throws Exception {
-		 FileInputStream file1=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\MainBooking\\InputData\\BookingData.xlsx");		
+		 FileInputStream file1=new FileInputStream("InputData/BookingData.xlsx");		
 			XSSFWorkbook workbook=new XSSFWorkbook(file1);
 			XSSFSheet sheet = workbook.getSheet("basicDetail");
 			int rowcount = sheet.getLastRowNum();
@@ -56,19 +60,19 @@ public class BookingTest extends Browser{
 		for(int exec=1;exec<=row;exec++) {
 			Thread.sleep(2000);
 		
-			jb2.verifyBasicDetails(exec);
+			pg2.verifyBasicDetails(exec);
 		
-			jb2.verifyServiceDetails(exec);
+			pg2.verifyServiceDetails(exec);
 		
-			jb2.verifyAdditionalDetails(exec);
+			pg2.verifyAdditionalDetails(exec);
 		
-			jb2.allContanerDetails(exec);
+			pg2.allContanerDetails(exec);
 		
-			jb2.allVehiPackingList(exec);
+			pg2.allVehiPackingList(exec);
 		
-			jb2.verifyCostRevenue(exec);
+			pg2.verifyCostRevenue(exec);
 		
-			jb2.saveBtn();
+			pg2.saveBtn();
 			System.out.println("*** JOB BOOKING DONE : "+exec+" ***");
 	
 	}
@@ -78,12 +82,12 @@ public class BookingTest extends Browser{
 
 	@AfterMethod
 	
-	public void exit(ITestResult b) throws Throwable
+	public void exit() throws Exception
 	{
-		if(ITestResult.FAILURE == b.getStatus())
+	/*	if(ITestResult.FAILURE == b.getStatus())
 		{	
 			CommonFiles.captureScreenshotFaildTC(driver,b.getName());
-		}
+		}*/
 		Thread.sleep(2500);
 		driver.quit();
 	

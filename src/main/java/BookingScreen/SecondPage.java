@@ -11,7 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
-import org.openqa.selenium.ElementClickInterceptedException;                //Notpad Copy
+import org.openqa.selenium.ElementClickInterceptedException;                
 import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.InvalidElementStateException;
 import org.openqa.selenium.JavascriptExecutor;
@@ -19,14 +19,16 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.UnhandledAlertException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
-import Base.Browser;
+import Base.BrowserCode;
 
-	public class JobBooking2 extends Browser {
+	public class SecondPage extends BrowserCode {
+		 private WebDriver driver;
 		
 		@FindBy(xpath = "//img[@id='ctl00_btnNew']")
 		private WebElement newBtn;
@@ -577,7 +579,8 @@ import Base.Browser;
 		@FindBy(xpath="//*[@id=\"ctl00_ContentPlaceHolder1_IFFBookBasic_grdRevenueDetails\"]/tbody//tr")private List<WebElement> RCrow;
 		
 		
-		public JobBooking2() {
+		public SecondPage(WebDriver driver) {   
+			this.driver = driver;
 			PageFactory.initElements(driver, this);
 		}
 		
@@ -601,7 +604,7 @@ import Base.Browser;
 		
 		public void verifyBasicDetails(int excel) throws Exception {
 		
-		  FileInputStream file5=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\MainBooking\\InputData\\BookingData.xlsx");	
+		  FileInputStream file5=new FileInputStream("InputData/BookingData.xlsx");	
 			
 			
 				XSSFWorkbook workbook=new XSSFWorkbook(file5);
@@ -638,7 +641,7 @@ import Base.Browser;
 			
 	//SELECT DROPDOWN
 			Thread.sleep(800);
-			FileInputStream file6=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\IFF_Project\\Test_Data\\sample_Test.xlsx");
+			FileInputStream file6=new FileInputStream("InputData/BookingData.xlsx");
 			Sheet excelSheet = WorkbookFactory.create(file6).getSheet("basicDetail");
 			String drop = excelSheet.getRow(4).getCell(5).getStringCellValue();
 			Select se = new Select(selectDrop);
@@ -1428,7 +1431,7 @@ import Base.Browser;
 
 		public void verifyServiceDetails(int excel) throws Exception {                 
 			
-			 FileInputStream file7=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\MainBooking\\InputData\\BookingData.xlsx");	
+			 FileInputStream file7=new FileInputStream("InputData/BookingData.xlsx");	
 				
 				
 				XSSFWorkbook workbook=new XSSFWorkbook(file7);
@@ -1819,7 +1822,7 @@ import Base.Browser;
 		
 		public void verifyAdditionalDetails(int excel) throws Exception {                 
 			
-			 FileInputStream file8=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\MainBooking\\InputData\\BookingData.xlsx");	
+			 FileInputStream file8=new FileInputStream("InputData/BookingData.xlsx");	
 				
 				
 				XSSFWorkbook workbook=new XSSFWorkbook(file8);
@@ -1947,7 +1950,7 @@ import Base.Browser;
 			jse.executeScript("window.scrollBy(0,-450)");
 			Thread.sleep(1000);
 			
-			FileInputStream file1=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\MainBooking\\InputData\\BookingData.xlsx");	
+			FileInputStream file1=new FileInputStream("InputData/BookingData.xlsx");	
 					
 					
 					XSSFWorkbook workbook=new XSSFWorkbook(file1);
@@ -2106,7 +2109,7 @@ import Base.Browser;
 					
 					JavascriptExecutor jse = (JavascriptExecutor)driver;
 					jse.executeScript("window.scrollBy(300,0)");
-			        FileInputStream file4=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\MainBooking\\InputData\\BookingData.xlsx");	
+			        FileInputStream file4=new FileInputStream("InputData/BookingData.xlsx");	
 					
 					
 					XSSFWorkbook workbook=new XSSFWorkbook(file4);
@@ -2262,7 +2265,7 @@ import Base.Browser;
 						Thread.sleep(800);
 					}
 					
-					FileInputStream file=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\MainBooking\\InputData\\BookingData.xlsx");	
+					FileInputStream file=new FileInputStream("InputData/BookingData.xlsx");	
 					
 					
 					XSSFWorkbook workbook=new XSSFWorkbook(file);
@@ -2560,7 +2563,11 @@ import Base.Browser;
 					Thread.sleep(2000);
 					driver.switchTo().alert().accept();
 					Thread.sleep(3000);
+					try {
 				    driver.switchTo().alert().accept();   //("Do you want to continue editing?Y/N")) 
+					}
+					catch(Exception e) {Thread.sleep(1500);}
+				    
 //This is for Successful Booking Code...
 					 if(text2.getText().contains("* Booking Saved Successfully")) {        //* Booking Saved Successfully CHN/BKG/AFE/00025/23-24
 								//	JOptionPane.showMessageDialog(null, "Booking Saved Successfully"+ exec);

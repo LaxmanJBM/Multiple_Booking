@@ -12,13 +12,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.io.FileHandler;
 
 public class CommonFiles {
-	
-public static WebDriver driver;
-	
 	public static String readExcelFile(int row,int col) throws Exception
 	{
-		FileInputStream file=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\IFF_Project\\Test_Data\\IFF TEST DATA.xlsx");
-		Sheet excelSheet = WorkbookFactory.create(file).getSheet("IFF");
+		FileInputStream file=new FileInputStream("InputData/BookingData.xlsx");
+		Sheet excelSheet = WorkbookFactory.create(file).getSheet("basicDetail");
 		String value = excelSheet.getRow(row).getCell(col).getStringCellValue();
 	 	return value;
 	}
@@ -30,7 +27,7 @@ public static WebDriver driver;
 		Date d=new Date();
 		String date = d.toString().replace(" ", "-").replace(":", "-");
 		File source = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-		File destination=new File("C:\\Users\\Admin\\eclipse-workspace\\MainBooking\\FailedScreenshots\\ "+ nameOfMethod +","+date+".png");
+		File destination=new File("MainBooking//FailedScreenshots// "+ nameOfMethod +","+date+".png");
 		FileHandler.copy(source, destination);
 	}
 	
@@ -38,7 +35,7 @@ public static WebDriver driver;
 	
 	public static String readExcelFileFinal(int row,int col) throws Exception
 	{
-		FileInputStream fileF=new FileInputStream("C:\\Users\\Admin\\eclipse-workspace\\IFF_Project\\Test_Data\\sample_Test.xlsx");
+		FileInputStream fileF=new FileInputStream("InputData/BookingData.xlsx");
 		Sheet excelSheet = WorkbookFactory.create(fileF).getSheet("basicDetail");
 		String value = excelSheet.getRow(row).getCell(col).getStringCellValue();
 	 	return value;

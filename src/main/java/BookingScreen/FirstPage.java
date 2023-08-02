@@ -2,14 +2,15 @@ package BookingScreen;
 
 import java.util.NoSuchElementException;
 
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import Base.BrowserCode;
 
-import Base.Browser;
-
-public class JobBooking1 extends Browser{
-
+public class FirstPage extends BrowserCode{
+	 private WebDriver driver;
 	
 	@FindBy(xpath = "//input[@title='Username']")
 	private WebElement username;
@@ -25,7 +26,8 @@ public class JobBooking1 extends Browser{
 	@FindBy(xpath = "//span[text()='Maintain Booking']")
 	private WebElement bookingBtn;
 
-	public JobBooking1() {
+	 public FirstPage(WebDriver driver) {
+	        this.driver = driver;
 		PageFactory.initElements(driver, this);
 	}
 
@@ -40,18 +42,21 @@ public class JobBooking1 extends Browser{
 	public void verifyIFFBtn() throws Exception {
 		try {
 			Thread.sleep(1000);
-		IFFBtn.click();}
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("arguments[0].click();", IFFBtn);}
 		catch(NoSuchElementException e) {
 		}
 	}
 
 	public void verifySalesBtn() throws Exception {
-		Thread.sleep(500);
-		salesBtn.click();
+		Thread.sleep(1000);
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("arguments[0].click();", salesBtn);
 	}
 
 	public void verifyBookingBtn() throws Exception {
-		bookingBtn.click();
+		JavascriptExecutor jsExecutor = (JavascriptExecutor) driver;
+        jsExecutor.executeScript("arguments[0].click();", bookingBtn);
 	}
 
 }
