@@ -12,6 +12,7 @@ import Utility.CommonFiles;
 public class BrowserCode extends CommonFiles {
 	
 //we can do perfect booking
+//Maintain_Booking --> Multiple_Booking	
 		protected static WebDriver driver;
 
 		public void initilization() throws Exception {
